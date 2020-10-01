@@ -7,6 +7,7 @@
 #define CoreGeometryVersion  GetFileVersion("SpeckleCoreGeometry\SpeckleCoreGeometry.dll")
 #define SpeckleElementsVersion  GetFileVersion("SpeckleElements\SpeckleElements.dll")
 #define SpeckleStructuralVersion  GetFileVersion("SpeckleStructural\SpeckleStructural.dll")
+#define SpeckleGSAVersion  GetFileVersion("SpeckleGSA\SpeckleGSA.dll")
 #define AppPublisher "Speckle"
 #define AppURL       "https://speckle.works"
 #define SpeckleFolder "{localappdata}\Speckle"      
@@ -46,6 +47,7 @@ Name: elements; Description: A Higher Level Object Model - v{#SpeckleElementsVer
 Name: structural; Description: Structural Object Model - v{#SpeckleStructuralVersion};  Types: full custom; Flags: fixed
 Name: dynamo; Description: Speckle for Dynamo 2.1+ - v{#DynamoVersion}; Types: full
 Name: gh; Description: Speckle for Rhino 6 & Grasshopper - v{#RhinoVersion};  Types: full
+Name: gsa; Description: Speckle for GSA - v{#SpeckleGSAVersion};  Types: full
 Name: revit19; Description: Speckle for Revit 2019 ALPHA - v{#RevitVersion};  Types: full
 Name: revit20; Description: Speckle for Revit 2020 ALPHA - v{#RevitVersion};  Types: full
 Name: revit21; Description: Speckle for Revit 2021 ALPHA - v{#RevitVersion};  Types: full
@@ -104,6 +106,9 @@ Source: "SpeckleElements\*"; DestDir: "{localappdata}\SpeckleKits\SpeckleElement
 ;structural
 Source: "SpeckleStructural\*"; DestDir: "{localappdata}\SpeckleKits\SpeckleStructural"; Flags: ignoreversion recursesubdirs; Components: elements  
 
+;structural
+Source: "SpeckleGSA\*"; DestDir: "{localappdata}\SpeckleKits\SpeckleGSA"; Flags: ignoreversion recursesubdirs; Components: elements  
+
 ;excel                                                                                                                                    
 ;Source: "{#Repository}\Arup.Compute.Excel\bin\Release\Arup.Compute.Excel-AddIn-packed.xll"; DestDir: "{userappdata}\Microsoft\AddIns\"; Flags: ignoreversion; Components: excel  
 
@@ -119,6 +124,7 @@ Type: filesandordirs; Name: "{cf}\McNeel\Rhinoceros\6.0\Plug-ins\Speckle Rhino P
 Type: filesandordirs; Name: "{localappdata}\SpeckleKits\SpeckleCoreGeometry\*"        
 Type: filesandordirs; Name: "{localappdata}\SpeckleKits\SpeckleElements\*"        
 Type: filesandordirs; Name: "{localappdata}\SpeckleKits\SpeckleStructural\*"
+Type: filesandordirs; Name: "{localappdata}\SpeckleKits\SpeckleGSA\*"
 
 [Registry]
 Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\6.0\Plug-ins\512d9705-6f92-49ca-a606-d6d5c1ac6aa2"; ValueType: string; ValueName: "Name"; ValueData: "Speckle";

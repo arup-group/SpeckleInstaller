@@ -1,0 +1,143 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Create Installer
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version of the installer to make'     
+        required: true
+
+jobs:                
+  installer:
+    runs-on: windows-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+        
+      - name: Calculate tag version
+        id: calculateTagVersion
+        shell: powershell
+        working-directory: SpeckleUpdater/Properties
+        run: |
+          $tag = "${{ github.event.inputs.version }}.$($env:GITHUB_RUN_ID%65536)"
+          (Get-content .\AssemblyInfo.cs) -replace '0\.0\.0\.0', $tag | Out-File -encoding ASCII .\AssemblyInfo.cs
+          echo "::set-output name=tag::$tag"
+    
+      - name: Restore SpeckleUpdater NuGets
+        run: nuget restore
+        
+      - name: Add MSBuild to the path
+        uses: microsoft/setup-msbuild@v1.0.1
+        
+      - name: Compile Speckle Updater in Release configuration
+        run: msbuild SpeckleUpdater.sln /property:Configuration=Release
+        
+      - uses: i3h/download-release-asset@v1
+        name: Download Rhino from Arup Group GitHub org
+        with:
+          owner: arup-group
+          repo: SpeckleRhino
+          tag: latest
+          file: SpeckleWinR6-cx.rhi
+          
+      - name: Inflate Rhino
+        run: |
+          7z x -oSpeckleRhino SpeckleWinR6-cx.rhi -r -aoa
+        
+      - uses: i3h/download-release-asset@v1
+        name: Download SpeckleGSA from Arup Group GitHub org
+        with:
+          owner: arup-group
+          repo: SpeckleGSA
+          tag: latest
+          file: SpeckleGSA.zip
+          
+      - name: Inflate SpeckleGSA
+        run: |
+          7z x -oSpeckleGSA SpeckleGSA.zip -r -aoa
+          
+      - uses: arup-group/action-download-appveyor-artifacts@main
+        name: Download SpeckleDynamo from Speckleworks GitHub org
+        with:
+         projectUrl : 'speckleworks/speckledynamo/branch/master'
+         outputDirectory: SpeckleDynamo
+         
+      - uses: arup-group/action-download-appveyor-artifacts@main
+        name: Download SpeckleRevit2019 from Speckleworks GitHub org
+        with:
+          projectUrl : 'speckleworks/specklerevitreboot/branch/master'
+          jobName: 'Configuration: Release2019'
+          outputDirectory: 'SpeckleRevit2019'
+          
+      - uses: arup-group/action-download-appveyor-artifacts@main
+        name: Download SpeckleRevit2020 from Speckleworks GitHub org
+        with:
+          projectUrl : 'speckleworks/specklerevitreboot/branch/master'
+          jobName: 'Configuration: Release2020'
+          outputDirectory: 'SpeckleRevit2020'
+          
+      - uses: arup-group/action-download-appveyor-artifacts@main
+        name: Download SpeckleRevit2021 from Speckleworks GitHub org
+        with:
+          projectUrl : 'speckleworks/specklerevitreboot/branch/master'
+          jobName: 'Configuration: Release2021'
+          outputDirectory: 'SpeckleRevit2021'
+          
+      - uses: arup-group/action-download-appveyor-artifacts@main
+        name: Download SpeckleCoreGeometry from Speckleworks GitHub org
+        with:
+         projectUrl : 'speckleworks/specklecoregeometry/branch/master'
+         outputDirectory: SpeckleCoreGeometry
+         
+      - uses: arup-group/action-download-appveyor-artifacts@main
+        name: Download SpeckleElements from Speckleworks GitHub org
+        with:
+         projectUrl : 'speckleworks/speckleelements/branch/master'
+         outputDirectory: 'SpeckleElements'
+         
+      - uses: arup-group/action-download-appveyor-artifacts@main
+        name: Download SpeckleStructural from Speckleworks GitHub org
+        with:
+         projectUrl : 'speckleworks/specklestructural/branch/master'
+         outputDirectory: SpeckleStructural
+
+      - name: create Installer
+        run: iscc /dAppVersion="${{ steps.calculateTagVersion.outputs.tag }}" SpeckleInstaller.iss
+
+      - name: Get Signing Certificate
+        run: |
+          [IO.File]::WriteAllBytes('signing.pfx', [Convert]::FromBase64String("${{ secrets.SIGNING_CERT }}"))
+
+      - name: Sign Installer
+        run: |
+          Set-Alias signtool "C:/Program Files (x86)/Windows Kits/10/bin/10.0.18362.0/x64/signtool.exe"
+          signtool sign /v /f signing.pfx /p "${{ secrets.SIGNING_CERT_PASSWORD }}" /fd sha256 /tr http://rfc3161timestamp.globalsign.com/advanced /td sha256 /d Speckle Speckle.exe
+
+      - name: Create Release
+        id: create-release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        with:
+          tag_name: ${{ steps.calculateTagVersion.outputs.tag }}
+          release_name: Speckle Installer ${{ steps.calculateTagVersion.outputs.tag }}
+          body: |
+            The best Speckle so far...
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}  
+          asset_path: ./Speckle.exe
+          asset_name: Speckle.exe
+          asset_content_type: application/vnd.microsoft.portable-executable
+

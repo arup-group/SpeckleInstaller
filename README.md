@@ -1,25 +1,29 @@
-# Speckle Installer
+# Speckle Installer - CX
 
-[![Build status](https://ci.appveyor.com/api/projects/status/pkdn8l2bumxy3esa/branch/master?svg=true)](https://ci.appveyor.com/project/SpeckleWorks/speckleinstaller) ![GitHub All Releases](https://img.shields.io/github/downloads/speckleworks/speckleinstaller/total)
+![Installer Builds](https://img.shields.io/github/workflow/status/arup-group/speckleinstaller/Create%20Installer)![GitHub All Releases](https://img.shields.io/github/downloads/arup-group/speckleinstaller/total)
 
 ![image](https://user-images.githubusercontent.com/2679513/48942587-fba54a00-ef17-11e8-8708-65f6be50ebe0.png) 
 
-Speckle desktop client installer for:
+Arup Speckle desktop client installer for:
 
 - Grasshopper
 - Rhino
 - Dynamo
-- (NEW) [SpeckleCoreGeometry](https://github.com/speckleworks/SpeckleCoreGeometry) 
+- [SpeckleCoreGeometry](https://github.com/speckleworks/SpeckleCoreGeometry)
+- (New) [GSA](https://github.com/arup-group/SpeckleGSA)
 
 The installer does not require admin privileges and auto updates!
 
-## Creating a new (pre) release
+## Creating a Release
 
-1. Change version in `appveyor.yml` file
-2. Commit & tag commit with the new version
-3. Push to origin
+1. Select Actions Tab
+2. Select `Create installer` workflow
+3. Press the `Run Workflow` button
+4. Select the `Master` branch
+5. Input the first three digits of the release version in the input box. e.g. `1.8.32`
+6. Press the `Run Workflow` button
 
-To push the newly minted pre-release, you'll need to edit it and change its status from `prerelease` to `release`.
+![gif on how to create a release](https://raw.githubusercontent.com/arup-group/SpeckleInstaller/master/Docs/how-to-make-a-release.gif)
 
 ## Installer tool
 This project uses [Inno Setup](http://www.jrsoftware.org/) to create the installer.

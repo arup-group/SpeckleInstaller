@@ -10,6 +10,6 @@ namespace SpeckleUpdater
   {
     internal static string AppName = "Speckle";
     internal static string InstallerName = "Speckle.exe";
-    internal static string LatestReopEndpoint = @"https://api.github.com/repos/speckleworks/SpeckleInstaller/releases/latest";
+    internal static string LatestReopEndpoint = @"https://api.github.com/repos/arup-group/SpeckleInstaller/releases/latest";
   }
 }

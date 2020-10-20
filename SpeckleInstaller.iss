@@ -125,6 +125,7 @@ Type: filesandordirs; Name: "{localappdata}\SpeckleKits\SpeckleCoreGeometry\*"
 Type: filesandordirs; Name: "{localappdata}\SpeckleKits\SpeckleElements\*"        
 Type: filesandordirs; Name: "{localappdata}\SpeckleKits\SpeckleStructural\*"
 Type: filesandordirs; Name: "{localappdata}\SpeckleKits\SpeckleGSA\*"
+Type: filesandordirs; Name: "{localappdata}\Speckle\*"
 
 [Registry]
 Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\6.0\Plug-ins\512d9705-6f92-49ca-a606-d6d5c1ac6aa2"; ValueType: string; ValueName: "Name"; ValueData: "Speckle";

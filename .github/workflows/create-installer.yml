@@ -112,10 +112,18 @@ jobs:
         run: |
           [IO.File]::WriteAllBytes('signing.pfx', [Convert]::FromBase64String("${{ secrets.SIGNING_CERT }}"))
 
+      - name: Get Name of exe file
+        id: listName
+        shell: powershell
+        run: |
+          $filename = (ls *.exe).Name
+          echo "::set-output name=filename::$filename"
+
       - name: Sign Installer
+        shell: powershell
         run: |
           Set-Alias signtool "C:/Program Files (x86)/Windows Kits/10/bin/10.0.18362.0/x64/signtool.exe"
-          signtool sign /v /f signing.pfx /p "${{ secrets.SIGNING_CERT_PASSWORD }}" /fd sha256 /tr http://rfc3161timestamp.globalsign.com/advanced /td sha256 /d Speckle Speckle.exe
+          signtool sign /v /f signing.pfx /p "${{ secrets.SIGNING_CERT_PASSWORD }}" /fd sha256 /tr http://rfc3161timestamp.globalsign.com/advanced /td sha256 /d Speckle ${{ steps.listName.outputs.filename }}
 
       - name: Create Release
         id: create-release
@@ -137,7 +145,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create-release.outputs.upload_url }}  
-          asset_path: ./Speckle.exe
-          asset_name: Speckle.exe
+          asset_path: ./${{ steps.listName.outputs.filename }}
+          asset_name: ${{ steps.listName.outputs.filename }}
           asset_content_type: application/vnd.microsoft.portable-executable
 

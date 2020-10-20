@@ -1,5 +1,5 @@
 ;defining variables
-#define AppName      "Speckle"
+#define AppName      "Speckle-cx"
 #define AppVersion GetFileVersion("SpeckleUpdater\bin\Release\SpeckleUpdater.exe")
 #define RhinoVersion  GetFileVersion("SpeckleRhino\SpeckleRhinoConverter.dll")
 #define DynamoVersion  GetFileVersion("SpeckleDynamo\bin\SpeckleDynamo.dll")
@@ -8,7 +8,7 @@
 #define SpeckleElementsVersion  GetFileVersion("SpeckleElements\SpeckleElements.dll")
 #define SpeckleStructuralVersion  GetFileVersion("SpeckleStructural\SpeckleStructural.dll")
 #define SpeckleGSAVersion  GetFileVersion("SpeckleGSA\SpeckleGSA.dll")
-#define AppPublisher "Speckle"
+#define AppPublisher "Speckle-cx"
 #define AppURL       "https://speckle.works"
 #define SpeckleFolder "{localappdata}\Speckle"      
 #define UpdaterFilename       "SpeckleUpdater.exe"
@@ -28,7 +28,7 @@ DefaultGroupName={#AppName}
 DisableProgramGroupPage=yes
 DisableWelcomePage=no
 OutputDir="."
-OutputBaseFilename=Speckle
+OutputBaseFilename=Speckle-cx-{#AppVersion}
 SetupIconFile=Assets\speckle.ico
 Compression=lzma
 SolidCompression=yes

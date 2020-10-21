@@ -7,7 +7,7 @@
 #define CoreGeometryVersion  GetFileVersion("SpeckleCoreGeometry\SpeckleCoreGeometry.dll")
 #define SpeckleElementsVersion  GetFileVersion("SpeckleElements\SpeckleElements.dll")
 #define SpeckleStructuralVersion  GetFileVersion("SpeckleStructural\SpeckleStructural.dll")
-#define GSAVersion  GetFileVersion("SpeckleGSA\SpeckleGSA.dll")
+#define SpeckleGSAVersion  GetFileVersion("SpeckleGSA\SpeckleGSA.dll")
 #define AppPublisher "Speckle-cx"
 #define AppURL       "https://speckle.works"
 #define SpeckleFolder "{localappdata}\Speckle"      

@@ -10,10 +10,12 @@ namespace SpeckleUpdater
   {
     public string Name { get; set; }
     public string Url { get; set; }
+    public string FileName { get; set; }
 
     public Release( string name, string url)
     {
       Name = name;
+      FileName = $"{Globals.InstallerName}-{name}.exe";
       Url = url;
     }
   }

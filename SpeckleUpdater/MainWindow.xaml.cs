@@ -64,8 +64,8 @@ namespace SpeckleUpdater
       //get latest version
       else
       {
-        _path = Path.Combine(folder, Globals.InstallerName);
-
+        _path = Path.Combine(folder, release.FileName);
+        
         //don't download if already there
         if (!File.Exists(_path) || !AlreadyDownloaded(release.Name))
         {

@@ -30,7 +30,7 @@ namespace SpeckleUpdater
             var githubRelease = JsonConvert.DeserializeObject<GitHubRelease>(await response.Content.ReadAsStringAsync());
             try
             {
-              release = new Release(githubRelease.tag_name, githubRelease.assets.First(x => x.name == Globals.InstallerName).browser_download_url);
+              release = new Release(githubRelease.tag_name, githubRelease.assets.First(x => x.name.StartsWith(Globals.InstallerName)).browser_download_url);
             }
             catch (Exception e)
             {

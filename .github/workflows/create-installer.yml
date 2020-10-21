@@ -132,9 +132,20 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         with:
           tag_name: ${{ steps.calculateTagVersion.outputs.tag }}
-          release_name: Speckle Installer ${{ steps.calculateTagVersion.outputs.tag }}
+          release_name: Speckle-cx Installer ${{ steps.calculateTagVersion.outputs.tag }}
           body: |
-            The best Speckle so far...
+            On installation of ${{ steps.listName.outputs.filename }} you may get a warning screen from Windows Defender due to the executable being downloaded from the internet. It is safe to ignore this message and continue installation.
+            
+            Speckle-cx installer includes the latest versions of the following SpeckleKits:
+            
+            - Rhino / Grasshopper (https://github.com/arup-group/SpeckleRhino)
+            - SpeckleRevit 2019/2020/2021 (https://github.com/speckleworks/specklerevitreboot)
+            - SpeckleCoreGeometry (https://github.com/speckleworks/SpeckleCoreGeometry)
+            - SpeckleElements (https://github.com/speckleworks/speckleelements)
+            - SpeckleStructural (https://github.com/speckleworks/specklestructural)
+            - SpeckleDynamo (https://github.com/speckleworks/speckledynamo) 
+
+            And the SpeckleGSA (https://github.com/arup-group/SpeckleGSA) plugin
           draft: false
           prerelease: false
 

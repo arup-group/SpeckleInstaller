@@ -7,7 +7,7 @@
 #define CoreGeometryVersion  GetFileVersion("SpeckleCoreGeometry\SpeckleCoreGeometry.dll")
 #define SpeckleElementsVersion  GetFileVersion("SpeckleElements\SpeckleElements.dll")
 #define SpeckleStructuralVersion  GetFileVersion("SpeckleStructural\SpeckleStructural.dll")
-#define SpeckleGSAVersion  GetFileVersion("SpeckleGSA\SpeckleGSA.dll")
+#define GSAVersion  GetFileVersion("SpeckleGSA\SpeckleGSA.dll")
 #define AppPublisher "Speckle-cx"
 #define AppURL       "https://speckle.works"
 #define SpeckleFolder "{localappdata}\Speckle"      
@@ -106,8 +106,8 @@ Source: "SpeckleElements\*"; DestDir: "{localappdata}\SpeckleKits\SpeckleElement
 ;structural
 Source: "SpeckleStructural\*"; DestDir: "{localappdata}\SpeckleKits\SpeckleStructural"; Flags: ignoreversion recursesubdirs; Components: elements  
 
-;structural
-Source: "SpeckleGSA\*"; DestDir: "{localappdata}\SpeckleKits\SpeckleGSA"; Flags: ignoreversion recursesubdirs; Components: elements  
+;gsa
+Source: "SpeckleGSA\*"; DestDir: "{localappdata}\SpeckleGSA"; Flags: ignoreversion recursesubdirs; Components: gsa  
 
 ;excel                                                                                                                                    
 ;Source: "{#Repository}\Arup.Compute.Excel\bin\Release\Arup.Compute.Excel-AddIn-packed.xll"; DestDir: "{userappdata}\Microsoft\AddIns\"; Flags: ignoreversion; Components: excel  
@@ -124,7 +124,7 @@ Type: filesandordirs; Name: "{cf}\McNeel\Rhinoceros\6.0\Plug-ins\Speckle Rhino P
 Type: filesandordirs; Name: "{localappdata}\SpeckleKits\SpeckleCoreGeometry\*"        
 Type: filesandordirs; Name: "{localappdata}\SpeckleKits\SpeckleElements\*"        
 Type: filesandordirs; Name: "{localappdata}\SpeckleKits\SpeckleStructural\*"
-Type: filesandordirs; Name: "{localappdata}\SpeckleKits\SpeckleGSA\*"
+Type: filesandordirs; Name: "{localappdata}\SpeckleGSA\*"
 Type: filesandordirs; Name: "{localappdata}\Speckle\*"
 
 [Registry]

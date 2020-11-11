@@ -146,8 +146,8 @@ jobs:
             - SpeckleDynamo (https://github.com/speckleworks/speckledynamo) 
 
             And the SpeckleGSA (https://github.com/arup-group/SpeckleGSA) plugin
-          draft: false
-          prerelease: false
+          draft: true
+          prerelease: true
 
       - name: Upload Release Asset
         id: upload-release-asset 

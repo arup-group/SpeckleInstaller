@@ -1,7 +1,7 @@
 ;defining variables
 #define AppName      "Speckle-cx"
 #define AppVersion GetFileVersion("SpeckleUpdater\bin\Release\SpeckleUpdater.exe")
-#define RhinoVersion  GetFileVersion("SpeckleRhino\SpeckleRhinoConverter.dll")
+#define RhinoVersion  GetFileVersion("SpeckleRhino\SpeckleWinR6.rhp")
 #define DynamoVersion  GetFileVersion("SpeckleDynamo\bin\SpeckleDynamo.dll")
 #define RevitVersion  GetFileVersion("SpeckleRevit2021\SpeckleRevit\SpeckleRevit.dll")
 #define CoreGeometryVersion  GetFileVersion("SpeckleCoreGeometry\SpeckleCoreGeometry.dll")

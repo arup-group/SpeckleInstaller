@@ -104,59 +104,65 @@ jobs:
         with:
          projectUrl : 'speckleworks/specklestructural/branch/master'
          outputDirectory: SpeckleStructural
-
-      - name: create Installer
-        run: iscc /dAppVersion="${{ steps.calculateTagVersion.outputs.tag }}" SpeckleInstaller.iss
-
-      - name: Get Signing Certificate
-        run: |
-          [IO.File]::WriteAllBytes('signing.pfx', [Convert]::FromBase64String("${{ secrets.SIGNING_CERT }}"))
-
-      - name: Get Name of exe file
-        id: listName
-        shell: powershell
-        run: |
-          $filename = (ls *.exe).Name
-          echo "::set-output name=filename::$filename"
-
-      - name: Sign Installer
-        shell: powershell
-        run: |
-          Set-Alias signtool "C:/Program Files (x86)/Windows Kits/10/bin/10.0.18362.0/x64/signtool.exe"
-          signtool sign /v /f signing.pfx /p "${{ secrets.SIGNING_CERT_PASSWORD }}" /fd sha256 /tr http://rfc3161timestamp.globalsign.com/advanced /td sha256 /d Speckle ${{ steps.listName.outputs.filename }}
-
-      - name: Create Release
-        id: create-release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+         
+      - uses: actions/upload-artifact@v2
         with:
-          tag_name: ${{ steps.calculateTagVersion.outputs.tag }}
-          release_name: Speckle-cx Installer ${{ steps.calculateTagVersion.outputs.tag }}
-          body: |
-            On installation of ${{ steps.listName.outputs.filename }} you may get a warning screen from Windows Defender due to the executable being downloaded from the internet. It is safe to ignore this message and continue installation.
-            
-            Speckle-cx installer includes the latest versions of the following SpeckleKits:
-            
-            - Rhino / Grasshopper (https://github.com/arup-group/SpeckleRhino)
-            - SpeckleRevit 2019/2020/2021 (https://github.com/speckleworks/specklerevitreboot)
-            - SpeckleCoreGeometry (https://github.com/speckleworks/SpeckleCoreGeometry)
-            - SpeckleElements (https://github.com/speckleworks/speckleelements)
-            - SpeckleStructural (https://github.com/speckleworks/specklestructural)
-            - SpeckleDynamo (https://github.com/speckleworks/speckledynamo) 
+          name: everything
+          path: ${{ github.workspace}}/
+          retention-days: 1
 
-            And the SpeckleGSA (https://github.com/arup-group/SpeckleGSA) plugin
-          draft: false
-          prerelease: false
+#       - name: create Installer
+#         run: iscc /dAppVersion="${{ steps.calculateTagVersion.outputs.tag }}" SpeckleInstaller.iss
 
-      - name: Upload Release Asset
-        id: upload-release-asset 
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create-release.outputs.upload_url }}  
-          asset_path: ./${{ steps.listName.outputs.filename }}
-          asset_name: ${{ steps.listName.outputs.filename }}
-          asset_content_type: application/vnd.microsoft.portable-executable
+#       - name: Get Signing Certificate
+#         run: |
+#           [IO.File]::WriteAllBytes('signing.pfx', [Convert]::FromBase64String("${{ secrets.SIGNING_CERT }}"))
+
+#       - name: Get Name of exe file
+#         id: listName
+#         shell: powershell
+#         run: |
+#           $filename = (ls *.exe).Name
+#           echo "::set-output name=filename::$filename"
+
+#       - name: Sign Installer
+#         shell: powershell
+#         run: |
+#           Set-Alias signtool "C:/Program Files (x86)/Windows Kits/10/bin/10.0.18362.0/x64/signtool.exe"
+#           signtool sign /v /f signing.pfx /p "${{ secrets.SIGNING_CERT_PASSWORD }}" /fd sha256 /tr http://rfc3161timestamp.globalsign.com/advanced /td sha256 /d Speckle ${{ steps.listName.outputs.filename }}
+
+#       - name: Create Release
+#         id: create-release
+#         uses: actions/create-release@latest
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+#         with:
+#           tag_name: ${{ steps.calculateTagVersion.outputs.tag }}
+#           release_name: Speckle-cx Installer ${{ steps.calculateTagVersion.outputs.tag }}
+#           body: |
+#             On installation of ${{ steps.listName.outputs.filename }} you may get a warning screen from Windows Defender due to the executable being downloaded from the internet. It is safe to ignore this message and continue installation.
+            
+#             Speckle-cx installer includes the latest versions of the following SpeckleKits:
+            
+#             - Rhino / Grasshopper (https://github.com/arup-group/SpeckleRhino)
+#             - SpeckleRevit 2019/2020/2021 (https://github.com/speckleworks/specklerevitreboot)
+#             - SpeckleCoreGeometry (https://github.com/speckleworks/SpeckleCoreGeometry)
+#             - SpeckleElements (https://github.com/speckleworks/speckleelements)
+#             - SpeckleStructural (https://github.com/speckleworks/specklestructural)
+#             - SpeckleDynamo (https://github.com/speckleworks/speckledynamo) 
+
+#             And the SpeckleGSA (https://github.com/arup-group/SpeckleGSA) plugin
+#           draft: false
+#           prerelease: false
+
+#       - name: Upload Release Asset
+#         id: upload-release-asset 
+#         uses: actions/upload-release-asset@v1
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         with:
+#           upload_url: ${{ steps.create-release.outputs.upload_url }}  
+#           asset_path: ./${{ steps.listName.outputs.filename }}
+#           asset_name: ${{ steps.listName.outputs.filename }}
+#           asset_content_type: application/vnd.microsoft.portable-executable
 

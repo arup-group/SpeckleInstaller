@@ -135,6 +135,7 @@ Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\6.0\Plug-ins\512d9705-6f92-49ca-
 [Icons]
 Name: "{group}\Check for updates"; Filename: "{#SpeckleFolder}\{#UpdaterFilename}"; Parameters: "-showprogress"
 Name: "{userappdata}\Microsoft\Windows\Start Menu\Programs\Startup\Speckle"; Filename: "{#SpeckleFolder}\{#UpdaterFilename}"; Tasks: updates
+Name: "{userappdata}\Microsoft\Windows\Start Menu\Programs\Oasys\SpeckleGSA"; Filename: "{localappdata}\SpeckleGSA\SpeckleGSAUI.exe";
 Name: "{group}\{cm:UninstallProgram,{#AppName}}"; Filename: "{uninstallexe}"
 ;Name: "{commondesktop}\{#AppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 

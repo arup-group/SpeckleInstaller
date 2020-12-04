@@ -59,12 +59,19 @@ jobs:
       - name: Inflate SpeckleGSA
         run: |
           7z x -oSpeckleGSA SpeckleGSA.zip -r -aoa
-          
-      - uses: arup-group/action-download-appveyor-artifacts@main
+        
+        
+      - uses: i3h/download-release-asset@v1
         name: Download SpeckleDynamo from Speckleworks GitHub org
         with:
-         projectUrl : 'speckleworks/speckledynamo/branch/master'
-         outputDirectory: SpeckleDynamo
+          owner: speckleworks
+          repo: SpeckleDynamo
+          tag: latest
+          file: /SpeckleDynamo-\d\.\d\.\d\.zip/
+          
+      - name: Inflate SpeckleDynamo
+        run: |
+          7z x -oSpeckleDynamo SpeckleDynamo*.zip -r -aoa
          
       - uses: arup-group/action-download-appveyor-artifacts@main
         name: Download SpeckleRevit2019 from Speckleworks GitHub org

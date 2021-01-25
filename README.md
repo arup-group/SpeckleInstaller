@@ -22,7 +22,8 @@ The installer does not require admin privileges and auto updates!
 4. Select the `Master` branch
 5. Input the first three digits of the release version in the input box. e.g. `1.8.32`
 6. Press the `Run Workflow` button
-7. Check the created release, if all is well, press the `Edit` button and until the `Pre-release` checkbox
+7. Download the installer and check the created release
+8. If all is well, press the `Edit` button on the release, unselect the `This is a pre-release` checkbox and press `update release`
 
 ![gif on how to create a release](https://raw.githubusercontent.com/arup-group/SpeckleInstaller/master/Docs/how-to-make-a-release.gif)
 

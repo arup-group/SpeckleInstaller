@@ -147,7 +147,7 @@ jobs:
 
             And the SpeckleGSA (https://github.com/arup-group/SpeckleGSA) plugin
           draft: false
-          prerelease: false
+          prerelease: true
 
       - name: Upload Release Asset
         id: upload-release-asset 

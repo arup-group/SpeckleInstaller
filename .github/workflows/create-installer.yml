@@ -181,16 +181,16 @@ jobs:
             
             Speckle-cx installer includes the following versions of the following SpeckleKits:
             
-            - [SpeckleCoreGeometry](https://github.com/arup-group/SpeckleCoreGeometry) -> ${{ steps.releaseVersions.outputs.coreGeometry }}
-            - [SpeckleElements](https://github.com/arup-group/speckleelements) -> ${{ steps.releaseVersions.outputs.speckleElements }}
-            - [SpeckleStructural](https://github.com/arup-group/specklestructural) -> ${{ steps.releaseVersions.outputs.speckleStructural }}
+            - [SpeckleCoreGeometry ${{ steps.releaseVersions.outputs.coreGeometry }}](https://github.com/arup-group/SpeckleCoreGeometry/releases/tag/${{ steps.releaseVersions.outputs.coreGeometry }})
+            - [SpeckleElements ${{ steps.releaseVersions.outputs.speckleElements }}](https://github.com/arup-group/speckleelements/releases/tag/${{ steps.releaseVersions.outputs.speckleElements }})
+            - [SpeckleStructural ${{ steps.releaseVersions.outputs.speckleStructural }}](https://github.com/arup-group/specklestructural/releases/tag/${{ steps.releaseVersions.outputs.speckleStructural }})
 
             And the following Speckle clients:
             
-            - [Rhino / Grasshopper](https://github.com/arup-group/SpeckleRhino) -> ${{ steps.releaseVersions.outputs.speckleRhino }}
-            - [SpeckleRevit 2019/2020/2021](https://github.com/arup-group/specklerevitreboot) -> ${{ steps.releaseVersions.outputs.revitReboot }}
-            - [SpeckleDynamo](https://github.com/arup-group/speckledynamo) -> ${{ steps.releaseVersions.outputs.speckledynamo }}
-            - [SpeckleGSA (https://github.com/arup-group/SpeckleGSA) plugin] -> ${{ steps.releaseVersions.outputs.speckleGSA }}
+            - [Rhino / Grasshopper ${{ steps.releaseVersions.outputs.speckleRhino }}](https://github.com/arup-group/SpeckleRhino/releases/tag/${{ steps.releaseVersions.outputs.speckleRhino }})
+            - [SpeckleRevit 2019/2020/2021 ${{ steps.releaseVersions.outputs.revitReboot }}](https://github.com/arup-group/specklerevitreboot/releases/tag/${{ steps.releaseVersions.outputs.revitReboot }})
+            - [SpeckleDynamo ${{ steps.releaseVersions.outputs.speckledynamo }}](https://github.com/arup-group/speckledynamo/releases/tag/${{ steps.releaseVersions.outputs.speckledynamo }})
+            - [SpeckleGSA plugin ${{ steps.releaseVersions.outputs.speckleGSA }}](https://github.com/arup-group/SpeckleGSA/releases/tag/${{ steps.releaseVersions.outputs.speckleGSA }})
           draft: false
           prerelease: true
 

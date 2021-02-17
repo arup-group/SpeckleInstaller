@@ -26,6 +26,24 @@ jobs:
           $tag = "${{ github.event.inputs.version }}.$($env:GITHUB_RUN_ID%65536)"
           (Get-content .\AssemblyInfo.cs) -replace '0\.0\.0\.0', $tag | Out-File -encoding ASCII .\AssemblyInfo.cs
           echo "::set-output name=tag::$tag"
+          
+      - name: Get Versions of each plugin
+        id: releaseVersions
+        run: |
+          $revitReboot = (Invoke-RestMethod -Uri https://api.github.com/repos/arup-group/specklerevitreboot/releases/latest).tag_name
+          $coreGeometry = (Invoke-RestMethod -Uri https://api.github.com/repos/arup-group/SpeckleCoreGeometry/releases/latest).tag_name
+          $speckleElements = (Invoke-RestMethod -Uri https://api.github.com/repos/arup-group/speckleelements/releases/latest).tag_name
+          $speckleStructural = (Invoke-RestMethod -Uri https://api.github.com/repos/arup-group/specklestructural/releases/latest).tag_name
+          $speckleRhino = (Invoke-RestMethod -Uri https://api.github.com/repos/arup-group/SpeckleRhino/releases/latest).tag_name
+          $speckledynamo = (Invoke-RestMethod -Uri https://api.github.com/repos/arup-group/speckledynamo/releases/latest).tag_name
+          $speckleGSA = (Invoke-RestMethod -Uri https://api.github.com/repos/arup-group/SpeckleGSA/releases/latest).tag_name
+          echo "::set-output name=coreGeometry::$coreGeometry"
+          echo "::set-output name=speckleElements::$speckleElements"
+          echo "::set-output name=speckleStructural::$speckleStructural"
+          echo "::set-output name=speckleRhino::$speckleRhino"
+          echo "::set-output name=speckledynamo::$speckledynamo"
+          echo "::set-output name=speckleGSA::$speckleGSA"
+          echo "::set-output name=revitReboot::$revitReboot"
     
       - name: Restore SpeckleUpdater NuGets
         run: nuget restore
@@ -148,26 +166,7 @@ jobs:
           name: Installer
           path: ${{ steps.listName.outputs.filename }}
           retention-days: 1
-          
-      - name: Get Versions of each plugin
-        id: releaseVersions
-        run: |
-          revitReboot=$(curl https://api.github.com/repos/arup-group/specklerevitreboot/releases/latest | jq -r '.tag_name')
-          coreGeometry=$(curl https://api.github.com/repos/arup-group/SpeckleCoreGeometry/releases/latest | jq -r '.tag_name')
-          speckleElements=$(curl https://api.github.com/repos/arup-group/speckleelements/releases/latest | jq -r '.tag_name')
-          speckleStructural=$(curl https://api.github.com/repos/arup-group/specklestructural/releases/latest | jq -r '.tag_name')
-          speckleRhino=$(curl https://api.github.com/repos/arup-group/SpeckleRhino/releases/latest | jq -r '.tag_name')
-          speckledynamo=$(curl https://api.github.com/repos/arup-group/speckledynamo/releases/latest | jq -r '.tag_name')
-          speckleGSA=$(curl https://api.github.com/repos/arup-group/SpeckleGSA/releases/latest | jq -r '.tag_name')
-          echo "::set-output name=coreGeometry::$coreGeometry"
-          echo "::set-output name=speckleElements::$speckleElements"
-          echo "::set-output name=speckleStructural::$speckleStructural"
-          echo "::set-output name=speckleRhino::$speckleRhino"
-          echo "::set-output name=speckledynamo::$speckledynamo"
-          echo "::set-output name=speckleGSA::$speckleGSA"
-          echo "::set-output name=revitReboot::$revitReboot"
-          
-      
+        
       - name: Create Release
 #         if: github.ref == 'refs/heads/master'
         id: create-release

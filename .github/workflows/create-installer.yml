@@ -148,9 +148,28 @@ jobs:
           name: Installer
           path: ${{ steps.listName.outputs.filename }}
           retention-days: 1
+          
+      - name: Get Versions of each plugin
+        id: releaseVersions
+        run: |
+          revitReboot=$(curl https://api.github.com/repos/arup-group/specklerevitreboot/releases/latest | jq -r '.tag_name')
+          coreGeometry=$(curl https://api.github.com/repos/arup-group/SpeckleCoreGeometry/releases/latest | jq -r '.tag_name')
+          speckleElements=$(curl https://api.github.com/repos/arup-group/speckleelements/releases/latest | jq -r '.tag_name')
+          speckleStructural=$(curl https://api.github.com/repos/arup-group/specklestructural/releases/latest | jq -r '.tag_name')
+          speckleRhino=$(curl https://api.github.com/repos/arup-group/SpeckleRhino/releases/latest | jq -r '.tag_name')
+          speckledynamo=$(curl https://api.github.com/repos/arup-group/speckledynamo/releases/latest | jq -r '.tag_name')
+          speckleGSA=$(curl https://api.github.com/repos/arup-group/SpeckleGSA/releases/latest | jq -r '.tag_name')
+          echo "::set-output name=coreGeometry::$coreGeometry"
+          echo "::set-output name=speckleElements::$speckleElements"
+          echo "::set-output name=speckleStructural::$speckleStructural"
+          echo "::set-output name=speckleRhino::$speckleRhino"
+          echo "::set-output name=speckledynamo::$speckledynamo"
+          echo "::set-output name=speckleGSA::$speckleGSA"
+          echo "::set-output name=revitReboot::$revitReboot"
+          
       
       - name: Create Release
-        if: github.ref == 'refs/heads/master'
+#         if: github.ref == 'refs/heads/master'
         id: create-release
         uses: actions/create-release@latest
         env:
@@ -161,18 +180,18 @@ jobs:
           body: |
             On installation of ${{ steps.listName.outputs.filename }} you may get a warning screen from Windows Defender due to the executable being downloaded from the internet. It is safe to ignore this message and continue installation.
             
-            Speckle-cx installer includes the latest versions of the following SpeckleKits:
+            Speckle-cx installer includes the following versions of the following SpeckleKits:
             
-            - SpeckleCoreGeometry (https://github.com/arup-group/SpeckleCoreGeometry)
-            - SpeckleElements (https://github.com/arup-group/speckleelements)
-            - SpeckleStructural (https://github.com/arup-group/specklestructural)
+            - [SpeckleCoreGeometry](https://github.com/arup-group/SpeckleCoreGeometry) -> ${{ steps.releaseVersions.outputs.coreGeometry }}
+            - [SpeckleElements](https://github.com/arup-group/speckleelements) -> ${{ steps.releaseVersions.outputs.speckleElements }}
+            - [SpeckleStructural](https://github.com/arup-group/specklestructural) -> ${{ steps.releaseVersions.outputs.speckleStructural }}
 
             And the following Speckle clients:
             
-            - Rhino / Grasshopper (https://github.com/arup-group/SpeckleRhino)
-            - SpeckleRevit 2019/2020/2021 (https://github.com/arup-group/specklerevitreboot)
-            - SpeckleDynamo (https://github.com/arup-group/speckledynamo) 
-            - SpeckleGSA (https://github.com/arup-group/SpeckleGSA) plugin
+            - [Rhino / Grasshopper](https://github.com/arup-group/SpeckleRhino) -> ${{ steps.releaseVersions.outputs.speckleRhino }}
+            - [SpeckleRevit 2019/2020/2021](https://github.com/arup-group/specklerevitreboot) -> ${{ steps.releaseVersions.outputs.revitReboot }}
+            - [SpeckleDynamo](https://github.com/arup-group/speckledynamo) -> ${{ steps.releaseVersions.outputs.speckledynamo }}
+            - [SpeckleGSA (https://github.com/arup-group/SpeckleGSA) plugin] -> ${{ steps.releaseVersions.outputs.speckleGSA }}
           draft: false
           prerelease: true
 

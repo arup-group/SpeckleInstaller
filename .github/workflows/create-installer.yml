@@ -168,7 +168,7 @@ jobs:
           retention-days: 1
         
       - name: Create Release
-#         if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
         id: create-release
         uses: actions/create-release@latest
         env:

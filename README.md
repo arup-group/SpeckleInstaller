@@ -6,11 +6,14 @@
 
 Arup Speckle desktop client installer for:
 
-- Grasshopper
-- Rhino
-- Dynamo
-- [SpeckleCoreGeometry](https://github.com/speckleworks/SpeckleCoreGeometry)
-- (New) [GSA](https://github.com/arup-group/SpeckleGSA)
+- Rhino / Grasshopper (https://github.com/arup-group/SpeckleRhino)
+- SpeckleRevit 2019/2020/2021 (https://github.com/arup-group/specklerevitreboot)
+- SpeckleCoreGeometry (https://github.com/arup-group/SpeckleCoreGeometry)
+- SpeckleElements (https://github.com/arup-group/speckleelements)
+- SpeckleStructural (https://github.com/arup-group/specklestructural)
+- SpeckleDynamo (https://github.com/arup-group/speckledynamo) 
+
+And the SpeckleGSA (https://github.com/arup-group/SpeckleGSA) plugin
 
 The installer does not require admin privileges and auto updates!
 

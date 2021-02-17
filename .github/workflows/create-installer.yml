@@ -163,14 +163,16 @@ jobs:
             
             Speckle-cx installer includes the latest versions of the following SpeckleKits:
             
-            - Rhino / Grasshopper (https://github.com/arup-group/SpeckleRhino)
-            - SpeckleRevit 2019/2020/2021 (https://github.com/arup-group/specklerevitreboot)
             - SpeckleCoreGeometry (https://github.com/arup-group/SpeckleCoreGeometry)
             - SpeckleElements (https://github.com/arup-group/speckleelements)
             - SpeckleStructural (https://github.com/arup-group/specklestructural)
-            - SpeckleDynamo (https://github.com/arup-group/speckledynamo) 
 
-            And the SpeckleGSA (https://github.com/arup-group/SpeckleGSA) plugin
+            And the following Speckle clients:
+            
+            - Rhino / Grasshopper (https://github.com/arup-group/SpeckleRhino)
+            - SpeckleRevit 2019/2020/2021 (https://github.com/arup-group/specklerevitreboot)
+            - SpeckleDynamo (https://github.com/arup-group/speckledynamo) 
+            - SpeckleGSA (https://github.com/arup-group/SpeckleGSA) plugin
           draft: false
           prerelease: true
 

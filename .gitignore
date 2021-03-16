@@ -8,6 +8,19 @@
 *.user
 *.userosscache
 *.sln.docstates
+TestFiles/
+SpeckleCoreGeometry/
+SpeckleDynamo/
+SpeckleElements/
+SpeckleGSA/
+SpeckleRevit2019/
+SpeckleRevit2020/
+SpeckleRevit2021/
+SpeckleRhino/
+SpeckleStructural/
+SpeckleUpdater/bin/Release/
+Speckle-cx*
+
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

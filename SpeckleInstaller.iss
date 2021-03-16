@@ -119,13 +119,13 @@ Source: "SpeckleGSA\*"; DestDir: "{localappdata}\SpeckleGSA"; Flags: ignoreversi
 ;42
 
 [InstallDelete]
-Type: filesandordirs; Name: "{userappdata}\McNeel\Rhinoceros\6.0\Plug-ins\Speckle Rhino Plugin (512d9705-6f92-49ca-a606-d6d5c1ac6aa2)\"
+Type: filesandordirs; Name: "{userappdata}\McNeel\Rhinoceros\6.0\Plug-ins\Speckle Rhino Plugin (512d9705-6f92-49ca-a606-d6d5c1ac6aa2)"
 Type: filesandordirs; Name: "{userappdata}\McNeel\Rhinoceros\6.0\Plug-ins\Speckle Rhino (512d9705-6f92-49ca-a606-d6d5c1ac6aa2)\*"
-Type: filesandordirs; Name: "{userappdata}\McNeel\Rhinoceros\7.0\Plug-ins\Speckle Rhino Plugin (512d9705-6f92-49ca-a606-d6d5c1ac6aa2)\"
+Type: filesandordirs; Name: "{userappdata}\McNeel\Rhinoceros\7.0\Plug-ins\Speckle Rhino Plugin (512d9705-6f92-49ca-a606-d6d5c1ac6aa2)"
 Type: filesandordirs; Name: "{userappdata}\McNeel\Rhinoceros\7.0\Plug-ins\Speckle Rhino (512d9705-6f92-49ca-a606-d6d5c1ac6aa2)\*"
-Type: filesandordirs; Name: "{commoncf}\McNeel\Rhinoceros\6.0\Plug-ins\Speckle Rhino Plugin (512d9705-6f92-49ca-a606-d6d5c1ac6aa2)\"
+Type: filesandordirs; Name: "{commoncf}\McNeel\Rhinoceros\6.0\Plug-ins\Speckle Rhino Plugin (512d9705-6f92-49ca-a606-d6d5c1ac6aa2)"
 Type: filesandordirs; Name: "{commoncf}\McNeel\Rhinoceros\6.0\Plug-ins\Speckle Rhino (512d9705-6f92-49ca-a606-d6d5c1ac6aa2)\*"
-Type: filesandordirs; Name: "{commoncf}\McNeel\Rhinoceros\7.0\Plug-ins\Speckle Rhino Plugin (512d9705-6f92-49ca-a606-d6d5c1ac6aa2)\"
+Type: filesandordirs; Name: "{commoncf}\McNeel\Rhinoceros\7.0\Plug-ins\Speckle Rhino Plugin (512d9705-6f92-49ca-a606-d6d5c1ac6aa2)"
 Type: filesandordirs; Name: "{commoncf}\McNeel\Rhinoceros\7.0\Plug-ins\Speckle Rhino (512d9705-6f92-49ca-a606-d6d5c1ac6aa2)\*"
 
 Type: filesandordirs; Name: "{localappdata}\SpeckleKits\SpeckleCoreGeometry\*"        

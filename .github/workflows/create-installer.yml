@@ -26,6 +26,24 @@ jobs:
           $tag = "${{ github.event.inputs.version }}.$($env:GITHUB_RUN_ID%65536)"
           (Get-content .\AssemblyInfo.cs) -replace '0\.0\.0\.0', $tag | Out-File -encoding ASCII .\AssemblyInfo.cs
           echo "::set-output name=tag::$tag"
+          
+      - name: Get Versions of each plugin
+        id: releaseVersions
+        run: |
+          $revitReboot = (Invoke-RestMethod -Uri https://api.github.com/repos/arup-group/specklerevitreboot/releases/latest).tag_name
+          $coreGeometry = (Invoke-RestMethod -Uri https://api.github.com/repos/arup-group/SpeckleCoreGeometry/releases/latest).tag_name
+          $speckleElements = (Invoke-RestMethod -Uri https://api.github.com/repos/arup-group/speckleelements/releases/latest).tag_name
+          $speckleStructural = (Invoke-RestMethod -Uri https://api.github.com/repos/arup-group/specklestructural/releases/latest).tag_name
+          $speckleRhino = (Invoke-RestMethod -Uri https://api.github.com/repos/arup-group/SpeckleRhino/releases/latest).tag_name
+          $speckledynamo = (Invoke-RestMethod -Uri https://api.github.com/repos/arup-group/speckledynamo/releases/latest).tag_name
+          $speckleGSA = (Invoke-RestMethod -Uri https://api.github.com/repos/arup-group/SpeckleGSA/releases/latest).tag_name
+          echo "::set-output name=coreGeometry::$coreGeometry"
+          echo "::set-output name=speckleElements::$speckleElements"
+          echo "::set-output name=speckleStructural::$speckleStructural"
+          echo "::set-output name=speckleRhino::$speckleRhino"
+          echo "::set-output name=speckledynamo::$speckledynamo"
+          echo "::set-output name=speckleGSA::$speckleGSA"
+          echo "::set-output name=revitReboot::$revitReboot"
     
       - name: Restore SpeckleUpdater NuGets
         run: nuget restore
@@ -62,55 +80,66 @@ jobs:
         
         
       - uses: i3h/download-release-asset@v1
-        name: Download SpeckleDynamo from Speckleworks GitHub org
+        name: Download SpeckleDynamo from Arup Group GitHub org
         with:
-          owner: speckleworks
+          owner: arup-group
           repo: SpeckleDynamo
           tag: latest
-          file: /SpeckleDynamo-\d\.\d\.\d\.zip/
+          file: /SpeckleDynamo-\d+\.\d+\.\d+\.zip/
           
       - name: Inflate SpeckleDynamo
         run: |
           7z x -oSpeckleDynamo SpeckleDynamo*.zip -r -aoa
-         
-      - uses: arup-group/action-download-appveyor-artifacts@main
-        name: Download SpeckleRevit2019 from Speckleworks GitHub org
-        with:
-          projectUrl : 'speckleworks/specklerevitreboot/branch/master'
-          jobName: 'Configuration: Release2019'
-          outputDirectory: 'SpeckleRevit2019'
           
-      - uses: arup-group/action-download-appveyor-artifacts@main
-        name: Download SpeckleRevit2020 from Speckleworks GitHub org
+      - uses: i3h/download-release-asset@v1
+        name: Download SpeckleRevit from Arup Group GitHub org
         with:
-          projectUrl : 'speckleworks/specklerevitreboot/branch/master'
-          jobName: 'Configuration: Release2020'
-          outputDirectory: 'SpeckleRevit2020'
+          owner: arup-group
+          repo: SpeckleRevitReboot
+          tag: latest
+          file: /SpeckleRevit20\d{2}-\d+\.\d+\.\d+\.zip/
           
-      - uses: arup-group/action-download-appveyor-artifacts@main
-        name: Download SpeckleRevit2021 from Speckleworks GitHub org
-        with:
-          projectUrl : 'speckleworks/specklerevitreboot/branch/master'
-          jobName: 'Configuration: Release2021'
-          outputDirectory: 'SpeckleRevit2021'
+      - name: Inflate SpeckleRevit
+        run: |
+          7z x -oSpeckleRevit2019 SpeckleRevit2019*.zip -r -aoa
+          7z x -oSpeckleRevit2020 SpeckleRevit2020*.zip -r -aoa
+          7z x -oSpeckleRevit2021 SpeckleRevit2021*.zip -r -aoa
           
-      - uses: arup-group/action-download-appveyor-artifacts@main
-        name: Download SpeckleCoreGeometry from Speckleworks GitHub org
+      - uses: i3h/download-release-asset@v1
+        name: Download SpeckleCoreGeometry from Arup Group GitHub org
         with:
-         projectUrl : 'speckleworks/specklecoregeometry/branch/master'
-         outputDirectory: SpeckleCoreGeometry
+          owner: arup-group
+          repo: SpeckleCoreGeometry
+          tag: latest
+          file: /SpeckleCoreGeometry-\d+\.\d+\.\d+\.zip/
+          
+      - name: Inflate SpeckleCoreGeometry
+        run: |
+          7z x -oSpeckleCoreGeometry SpeckleCoreGeometry*.zip -r -aoa
          
-      - uses: arup-group/action-download-appveyor-artifacts@main
-        name: Download SpeckleElements from Speckleworks GitHub org
+      - uses: i3h/download-release-asset@v1
+        name: Download SpeckleElements from Arup Group GitHub org
         with:
-         projectUrl : 'speckleworks/speckleelements/branch/master'
-         outputDirectory: 'SpeckleElements'
-         
-      - uses: arup-group/action-download-appveyor-artifacts@main
-        name: Download SpeckleStructural from Speckleworks GitHub org
+          owner: arup-group
+          repo: SpeckleElements
+          tag: latest
+          file: /SpeckleElements-\d+\.\d+\.\d+\.zip/
+          
+      - name: Inflate SpeckleElements
+        run: |
+          7z x -oSpeckleElements SpeckleElements*.zip -r -aoa
+          
+      - uses: i3h/download-release-asset@v1
+        name: Download SpeckleStructural from Arup Group GitHub org
         with:
-         projectUrl : 'speckleworks/specklestructural/branch/master'
-         outputDirectory: SpeckleStructural
+          owner: arup-group
+          repo: SpeckleStructural
+          tag: latest
+          file: /SpeckleStructural-\d+\.\d+\.\d+\.zip/
+          
+      - name: Inflate SpeckleStructural
+        run: |
+          7z x -oSpeckleStructural SpeckleStructural*.zip -r -aoa
 
       - name: create Installer
         run: iscc /dAppVersion="${{ steps.calculateTagVersion.outputs.tag }}" SpeckleInstaller.iss
@@ -132,7 +161,14 @@ jobs:
           Set-Alias signtool "C:/Program Files (x86)/Windows Kits/10/bin/10.0.18362.0/x64/signtool.exe"
           signtool sign /v /f signing.pfx /p "${{ secrets.SIGNING_CERT_PASSWORD }}" /fd sha256 /tr http://rfc3161timestamp.globalsign.com/advanced /td sha256 /d Speckle ${{ steps.listName.outputs.filename }}
 
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Installer
+          path: ${{ steps.listName.outputs.filename }}
+          retention-days: 1
+        
       - name: Create Release
+        if: github.ref == 'refs/heads/master'
         id: create-release
         uses: actions/create-release@latest
         env:
@@ -143,20 +179,23 @@ jobs:
           body: |
             On installation of ${{ steps.listName.outputs.filename }} you may get a warning screen from Windows Defender due to the executable being downloaded from the internet. It is safe to ignore this message and continue installation.
             
-            Speckle-cx installer includes the latest versions of the following SpeckleKits:
+            Speckle-cx installer includes the following versions of the following SpeckleKits:
             
-            - Rhino / Grasshopper (https://github.com/arup-group/SpeckleRhino)
-            - SpeckleRevit 2019/2020/2021 (https://github.com/speckleworks/specklerevitreboot)
-            - SpeckleCoreGeometry (https://github.com/speckleworks/SpeckleCoreGeometry)
-            - SpeckleElements (https://github.com/speckleworks/speckleelements)
-            - SpeckleStructural (https://github.com/speckleworks/specklestructural)
-            - SpeckleDynamo (https://github.com/speckleworks/speckledynamo) 
+            - [SpeckleCoreGeometry ${{ steps.releaseVersions.outputs.coreGeometry }}](https://github.com/arup-group/SpeckleCoreGeometry/releases/tag/${{ steps.releaseVersions.outputs.coreGeometry }})
+            - [SpeckleElements ${{ steps.releaseVersions.outputs.speckleElements }}](https://github.com/arup-group/speckleelements/releases/tag/${{ steps.releaseVersions.outputs.speckleElements }})
+            - [SpeckleStructural ${{ steps.releaseVersions.outputs.speckleStructural }}](https://github.com/arup-group/specklestructural/releases/tag/${{ steps.releaseVersions.outputs.speckleStructural }})
 
-            And the SpeckleGSA (https://github.com/arup-group/SpeckleGSA) plugin
+            And the following Speckle clients:
+            
+            - [Rhino / Grasshopper ${{ steps.releaseVersions.outputs.speckleRhino }}](https://github.com/arup-group/SpeckleRhino/releases/tag/${{ steps.releaseVersions.outputs.speckleRhino }})
+            - [SpeckleRevit 2019/2020/2021 ${{ steps.releaseVersions.outputs.revitReboot }}](https://github.com/arup-group/specklerevitreboot/releases/tag/${{ steps.releaseVersions.outputs.revitReboot }})
+            - [SpeckleDynamo ${{ steps.releaseVersions.outputs.speckledynamo }}](https://github.com/arup-group/speckledynamo/releases/tag/${{ steps.releaseVersions.outputs.speckledynamo }})
+            - [SpeckleGSA plugin ${{ steps.releaseVersions.outputs.speckleGSA }}](https://github.com/arup-group/SpeckleGSA/releases/tag/${{ steps.releaseVersions.outputs.speckleGSA }})
           draft: false
           prerelease: true
 
       - name: Upload Release Asset
+        if: github.ref == 'refs/heads/master'
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:

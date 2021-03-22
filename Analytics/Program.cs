@@ -1,9 +1,7 @@
 ﻿using Piwik.Tracker;
-using System.Runtime.InteropServices;
 using System;
 using SpeckleCore;
 using System.Globalization;
-using System.Diagnostics;
 using System.IO;
 
 namespace analytics
@@ -12,18 +10,18 @@ namespace analytics
     {
         private static readonly string PiwikBaseUrl = "https://arupdt.matomo.cloud/";
         private static readonly int SiteId = 1;
+        private static readonly string CacheLocation = "\\SpeckleSettings\\SpeckleCache.db";
 
         static void Main(string[] args)
         {
             PiwikTracker _piwikTracker = new PiwikTracker(SiteId, PiwikBaseUrl);
-            String _version = args[0];
-            String _allowedDomain = args[1];
-            String _machineName = Environment.MachineName.ToLower(new CultureInfo("en-GB", false));            
-            String _appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            String _speckleUpdaterExe = _appDataFolder + "\\Speckle\\SpeckleUpdater.exe";
+            string _version = args[0];
+            string _allowedDomain = args[1];
+            string _machineName = Environment.MachineName.ToLower(new CultureInfo("en-GB", false));            
+            string _appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
             // Check to see if this is an update or it's a new user.
-            String _installType = File.Exists(_speckleUpdaterExe) ? "update" : "new";
+            string _installType = File.Exists(_appDataFolder + CacheLocation) ? "update" : "new";
             
             // Only track users from specific domains (not general public)
             if(_machineName.Contains(_allowedDomain)) {

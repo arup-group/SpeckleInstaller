@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 using System;
 using SpeckleCore;
 using System.Globalization;
+using System.Diagnostics;
+using System.IO;
 
 namespace analytics
 {
@@ -13,18 +15,22 @@ namespace analytics
 
         static void Main(string[] args)
         {
-            var _piwikTracker = new PiwikTracker(SiteId, PiwikBaseUrl);
-            var _action = args[0];
-            var _version = args[1];
-            var _domain = args[2];
-            var _machineName = Environment.MachineName.ToLower(new CultureInfo("en-GB", false));
+            PiwikTracker _piwikTracker = new PiwikTracker(SiteId, PiwikBaseUrl);
+            String _version = args[0];
+            String _allowedDomain = args[1];
+            String _machineName = Environment.MachineName.ToLower(new CultureInfo("en-GB", false));            
+            String _appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            String _speckleUpdaterExe = _appDataFolder + "\\Speckle\\SpeckleUpdater.exe";
+
+            // Check to see if this is an update or it's a new user.
+            String _installType = File.Exists(_speckleUpdaterExe) ? "update" : "new";
+            
             // Only track users from specific domains (not general public)
-            if(_machineName.Contains(_domain)) {
-                // Set telemetry to true in the database
-                LocalContext.Init();
+            if(_machineName.Contains(_allowedDomain)) {
+                // Sets a flag in the cache database. Used by clients.
                 LocalContext.SetTelemetrySettings(true);
                 // Send this information to Matomo
-                _piwikTracker.DoTrackEvent("SpeckleInstaller", _action, _version); 
+                _piwikTracker.DoTrackEvent("SpeckleInstaller", _installType, _version); 
             }
         }
 

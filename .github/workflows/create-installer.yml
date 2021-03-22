@@ -35,6 +35,14 @@ jobs:
         
       - name: Compile Speckle Updater in Release configuration
         run: msbuild SpeckleUpdater.sln /property:Configuration=Release
+
+      - name: Analytics CLI - Restore NuGets
+        run: dotnet restore
+        working-directory: Analytics
+
+      - name: Analytics CLI - Compile CLI
+        run: dotnet build --configuration Release --runtime win-x64
+        working-directory: Analytics
         
       - uses: i3h/download-release-asset@v1
         name: Download Rhino from Arup Group GitHub org
@@ -114,6 +122,8 @@ jobs:
 
       - name: create Installer
         run: iscc /dAppVersion="${{ steps.calculateTagVersion.outputs.tag }}" SpeckleInstaller.iss
+        env:
+          ENABLE_TELEMETRY_DOMAIN: ${{ secrets.ENABLE_TELEMETRY_DOMAIN }}
 
       - name: Get Signing Certificate
         run: |
@@ -131,6 +141,13 @@ jobs:
         run: |
           Set-Alias signtool "C:/Program Files (x86)/Windows Kits/10/bin/10.0.18362.0/x64/signtool.exe"
           signtool sign /v /f signing.pfx /p "${{ secrets.SIGNING_CERT_PASSWORD }}" /fd sha256 /tr http://rfc3161timestamp.globalsign.com/advanced /td sha256 /d Speckle ${{ steps.listName.outputs.filename }}
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ steps.listName.outputs.filename }}
+          path: ${{ steps.listName.outputs.filename }}
+          retention-days: 1
 
       - name: Create Release
         id: create-release
@@ -166,4 +183,3 @@ jobs:
           asset_path: ./${{ steps.listName.outputs.filename }}
           asset_name: ${{ steps.listName.outputs.filename }}
           asset_content_type: application/vnd.microsoft.portable-executable
-

@@ -23,7 +23,7 @@ namespace SpeckleUpdater
           client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("User-Agent", "speckle-updater"));
 
           // get the latest build on master
-          using (var response = await client.GetAsync(Globals.LatestReopEndpoint))
+          using (var response = await client.GetAsync(Globals.LatestRepoEndpoint))
           {
             response.EnsureSuccessStatusCode();
 

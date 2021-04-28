@@ -140,27 +140,23 @@ jobs:
       - name: Inflate SpeckleStructural
         run: |
           7z x -oSpeckleStructural SpeckleStructural*.zip -r -aoa
-
       - name: create Installer
         run: iscc /dAppVersion="${{ steps.calculateTagVersion.outputs.tag }}" SpeckleInstaller.iss
 
       - name: Get Signing Certificate
         run: |
           [IO.File]::WriteAllBytes('signing.pfx', [Convert]::FromBase64String("${{ secrets.SIGNING_CERT }}"))
-
       - name: Get Name of exe file
         id: listName
         shell: powershell
         run: |
           $filename = (ls *.exe).Name
           echo "::set-output name=filename::$filename"
-
       - name: Sign Installer
         shell: powershell
         run: |
           Set-Alias signtool "C:/Program Files (x86)/Windows Kits/10/bin/10.0.18362.0/x64/signtool.exe"
           signtool sign /v /f signing.pfx /p "${{ secrets.SIGNING_CERT_PASSWORD }}" /fd sha256 /tr http://rfc3161timestamp.globalsign.com/advanced /td sha256 /d Speckle ${{ steps.listName.outputs.filename }}
-
       - uses: actions/upload-artifact@v2
         with:
           name: Installer
@@ -184,7 +180,6 @@ jobs:
             - [SpeckleCoreGeometry ${{ steps.releaseVersions.outputs.coreGeometry }}](https://github.com/arup-group/SpeckleCoreGeometry/releases/tag/${{ steps.releaseVersions.outputs.coreGeometry }})
             - [SpeckleElements ${{ steps.releaseVersions.outputs.speckleElements }}](https://github.com/arup-group/speckleelements/releases/tag/${{ steps.releaseVersions.outputs.speckleElements }})
             - [SpeckleStructural ${{ steps.releaseVersions.outputs.speckleStructural }}](https://github.com/arup-group/specklestructural/releases/tag/${{ steps.releaseVersions.outputs.speckleStructural }})
-
             And the following Speckle clients:
             
             - [Rhino / Grasshopper ${{ steps.releaseVersions.outputs.speckleRhino }}](https://github.com/arup-group/SpeckleRhino/releases/tag/${{ steps.releaseVersions.outputs.speckleRhino }})
@@ -205,4 +200,3 @@ jobs:
           asset_path: ./${{ steps.listName.outputs.filename }}
           asset_name: ${{ steps.listName.outputs.filename }}
           asset_content_type: application/vnd.microsoft.portable-executable
-

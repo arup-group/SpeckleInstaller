@@ -10,8 +10,10 @@
 #define SpeckleGSAVersion  GetFileVersion("SpeckleGSA\SpeckleGSA.dll")
 #define AppPublisher "Speckle-cx"
 #define AppURL       "https://speckle.works"
-#define SpeckleFolder "{localappdata}\Speckle"      
+#define SpeckleFolder "{localappdata}\Speckle" 
+#define AnalyticsFolder "{localappdata}\SpeckleAnalytics"      
 #define UpdaterFilename       "SpeckleUpdater.exe"
+#define AnalyticsFilename       "analytics.exe"
 
 [Setup]
 AppId={{BA3A01AA-F70D-4747-AA0E-E93F38C793C8}
@@ -67,6 +69,9 @@ Name: "{app}"; Permissions: everyone-full
 [Files]
 ;updater
 Source: "SpeckleUpdater\bin\Release\*"; DestDir: "{#SpeckleFolder}"; Flags: ignoreversion recursesubdirs;
+
+;analytics
+Source: "Analytics\bin\Release\net45\win-x64\*"; DestDir: "{#AnalyticsFolder}"; Flags: ignoreversion recursesubdirs;
 
 ;rhino+gh                                                                                                                                      
 Source: "SpeckleRhino\*"; DestDir: "{userappdata}\McNeel\Rhinoceros\6.0\Plug-ins\Speckle Rhino Plugin (512d9705-6f92-49ca-a606-d6d5c1ac6aa2)\{#RhinoVersion}"; Flags: ignoreversion recursesubdirs; Components: gh  
@@ -126,6 +131,7 @@ Type: filesandordirs; Name: "{localappdata}\SpeckleKits\SpeckleElements\*"
 Type: filesandordirs; Name: "{localappdata}\SpeckleKits\SpeckleStructural\*"
 Type: filesandordirs; Name: "{localappdata}\SpeckleGSA\*"
 Type: filesandordirs; Name: "{localappdata}\Speckle\*"
+Type: filesandordirs; Name: "{localappdata}\SpeckleAnalytics\*"
 
 [Registry]
 Root: HKCU; Subkey: "SOFTWARE\McNeel\Rhinoceros\6.0\Plug-ins\512d9705-6f92-49ca-a606-d6d5c1ac6aa2"; ValueType: string; ValueName: "Name"; ValueData: "Speckle";
@@ -138,6 +144,9 @@ Name: "{userappdata}\Microsoft\Windows\Start Menu\Programs\Startup\Speckle"; Fil
 Name: "{userappdata}\Microsoft\Windows\Start Menu\Programs\Oasys\SpeckleGSA"; Filename: "{localappdata}\SpeckleGSA\SpeckleGSAUI.exe";
 Name: "{group}\{cm:UninstallProgram,{#AppName}}"; Filename: "{uninstallexe}"
 ;Name: "{commondesktop}\{#AppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+
+[Run]
+Filename: "{#AnalyticsFolder}\analytics.exe"; Parameters: "{#AppVersion} {#GetEnv('ENABLE_TELEMETRY_DOMAIN')}"; Description: "Send anonymous analytics to Arup. No project data or personally identifiable information will be sent."
 
 ;checks if minimun requirements are met
 [Code]

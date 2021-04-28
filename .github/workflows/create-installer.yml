@@ -188,6 +188,7 @@ jobs:
             - [SpeckleCoreGeometry ${{ steps.releaseVersions.outputs.coreGeometry }}](https://github.com/arup-group/SpeckleCoreGeometry/releases/tag/${{ steps.releaseVersions.outputs.coreGeometry }})
             - [SpeckleElements ${{ steps.releaseVersions.outputs.speckleElements }}](https://github.com/arup-group/speckleelements/releases/tag/${{ steps.releaseVersions.outputs.speckleElements }})
             - [SpeckleStructural ${{ steps.releaseVersions.outputs.speckleStructural }}](https://github.com/arup-group/specklestructural/releases/tag/${{ steps.releaseVersions.outputs.speckleStructural }})
+            
             And the following Speckle clients:
             
             - [Rhino / Grasshopper ${{ steps.releaseVersions.outputs.speckleRhino }}](https://github.com/arup-group/SpeckleRhino/releases/tag/${{ steps.releaseVersions.outputs.speckleRhino }})

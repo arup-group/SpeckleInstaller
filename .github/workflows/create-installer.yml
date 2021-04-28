@@ -54,6 +54,14 @@ jobs:
       - name: Compile Speckle Updater in Release configuration
         run: msbuild SpeckleUpdater.sln /property:Configuration=Release
         
+      - name: Analytics CLI - Restore NuGets
+        run: dotnet restore
+        working-directory: Analytics
+
+      - name: Analytics CLI - Compile CLI
+        run: dotnet build --configuration Release --runtime win-x64
+        working-directory: Analytics        
+        
       - uses: i3h/download-release-asset@v1
         name: Download Rhino from Arup Group GitHub org
         with:

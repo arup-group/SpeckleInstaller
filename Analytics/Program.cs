@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Net;
 
 namespace analytics
 {
@@ -19,13 +20,14 @@ namespace analytics
             PiwikTracker _piwikTracker = new PiwikTracker(SiteId, PiwikBaseUrl);
             string _version = args[0];
             string _internalDomain = args[1];
-            string _machineName = Environment.MachineName.ToLower(new CultureInfo("en-GB", false));            
+            string _machineName = Environment.MachineName.ToLower(new CultureInfo("en-GB", false));
+            string _domainName = Dns.GetHostEntry("").HostName;
             string _appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
             // If the cache has been set up this is an update, otherwise it's a new user
             string _installType = File.Exists(_appDataFolder + CacheLocation) ? "update" : "new";
 
-            bool _isInternalDomain = _machineName.Contains(_internalDomain);
+            bool _isInternalDomain = _machineName.Contains(_internalDomain) || _domainName.Contains(_internalDomain);
 
             // Don't collect telemetry except for users on the internal domain.
             LocalContext.SetTelemetrySettings(_isInternalDomain);

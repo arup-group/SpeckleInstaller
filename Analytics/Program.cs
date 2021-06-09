@@ -34,7 +34,9 @@ namespace analytics
             
             if(_isInternalDomain) {
                 // Hash the username and send it with the installer info
-                _piwikTracker.SetUserId(ComputeSHA256Hash(Environment.UserName + "@" + _internalDomain + ".com"));
+                string _userEmail = Environment.UserName + "@" + _internalDomain + ".com";
+                string _userId = _userEmail.ToLower(new CultureInfo("en-GB", false));
+                _piwikTracker.SetUserId(ComputeSHA256Hash(_userId));
 
                 // Send this information to Matomo
                 _piwikTracker.DoTrackEvent("SpeckleInstaller", _installType, _version); 
